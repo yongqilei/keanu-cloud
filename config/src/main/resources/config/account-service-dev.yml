@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid:
+      url: jdbc:mysql://192.168.0.13:3306/keanu-cloud?useUnicode=true&characterEncoding=utf-8&useSsl=false
+      username: root
+      password: '{cipher}25cde08d9bc9b0e97f6e57b228e6c9d565dfe6d9366904beb87405dbc128c10f'
+      initial-size: 10
+      min-idle: 5
+      max-active: 50
+      max-wait: 3000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-return: false
+      test-on-borrow: false
+      pool-prepared-statements: true
+      use-global-data-source-stat: true
+      filters: stat, wall
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+
+security:
+  oauth2:
+    resource:
+      token-info-uri: http://localhost:5000/uaa/check_token
+    client:
+      client-id: account-service
+      client-secret: ${ACCOUNT_SERVICE_PASSWORD}
+      access-token-uri: http://auth-service/uaa/oauth/token
+      grant-type: client-credentials
+      scope: server
+
+server:
+  servlet:
+    context-path: /accounts
+  port: 8082
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml

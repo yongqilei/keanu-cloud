@@ -1,0 +1,39 @@
+server:
+  port: 8760
+  servlet:
+    context-path: /uaa
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      url: jdbc:mysql://192.168.0.13:3306/keanu-cloud?useUnicode=true&characterEncoding=utf-8&useSsl=false
+      username: root
+      password: '{cipher}25cde08d9bc9b0e97f6e57b228e6c9d565dfe6d9366904beb87405dbc128c10f'
+      initial-size: 10
+      min-idle: 5
+      max-active: 50
+      max-wait: 3000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-return: false
+      test-on-borrow: false
+      pool-prepared-statements: true
+      use-global-data-source-stat: true
+      filters: stat, wall
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+  redis:
+    host: 192.168.0.13
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 30
+        min-idle: 5
+        max-wait: 3000ms
+        time-between-eviction-runs: 300000ms
+logging:
+  level:
+    org.springframework.security: debug
+    org.springframework.data.mongo.core: debug

@@ -1,0 +1,19 @@
+zuul:
+  host:
+    connect-timeout-millis: 20000
+    socket-timeout-millis: 20000
+  routes:
+    auth-service:
+      path: /uaa/**
+      service-id: auth-service
+      strip-prefix: false
+      sensitive-headers:
+      
+    account-service:
+      path: /accounts/**
+      service-id: account-service
+      strip-prefix: false
+      sensitive-headers:
+
+server:
+  port: 5000

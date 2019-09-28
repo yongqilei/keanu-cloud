@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: account-service
+  profiles:
+    active: dev
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      fail-fast: true
+      profile: ${spring.profiles.active}
+      name: ${spring.application.name}
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

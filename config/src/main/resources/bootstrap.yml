@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      enabled: true
+      server:
+        native:
+          search-locations: classpath:/config
+server:
+  port: 7001
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+encrypt:
+  key: $2a$10$U7YSTc2wepBFopFwHU4RD.9e6CWAji0N2q5uVVPUVckD.G2SnnzDC

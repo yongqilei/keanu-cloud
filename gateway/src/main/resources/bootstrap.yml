@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: gateway
+  profiles:
+    active: dev
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      fail-fast: true
+      profile: ${spring.profiles.active}
+      name: ${spring.application.name}
+
