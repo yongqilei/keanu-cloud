@@ -24,7 +24,7 @@ spring:
 security:
   oauth2:
     resource:
-      token-info-uri: http://localhost:5000/uaa/check_token
+      token-info-uri: http://localhost:5000/uaa/oauth/token
     client:
       client-id: account-service
       client-secret: ${ACCOUNT_SERVICE_PASSWORD}

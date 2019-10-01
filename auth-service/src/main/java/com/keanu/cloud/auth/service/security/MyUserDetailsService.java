@@ -21,7 +21,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> existing = Optional.ofNullable(userMapper.selectByUsername(username));
 		
-		return existing.orElseThrow(() -> { throw new UsernameNotFoundException(username); });
+		return existing.<UsernameNotFoundException>orElseThrow(() -> { throw new UsernameNotFoundException(username); });
 	}
 
 }
