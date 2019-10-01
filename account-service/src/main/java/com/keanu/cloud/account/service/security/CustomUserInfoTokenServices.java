@@ -1,16 +1,14 @@
 package com.keanu.cloud.account.service.security;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.FixedAuthoritiesExtractor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.client.OAuth2RestOperations;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails;
@@ -40,8 +38,8 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 	
 	private AuthoritiesExtractor authoritiesExtractor = new FixedAuthoritiesExtractor();
 	
-	public CustomUserInfoTokenServices(String userinfoEndpointUrl, String clientId) {
-		this.userInfoEndpointUrl = userinfoEndpointUrl;
+	public CustomUserInfoTokenServices(String userInfoEndpointUrl, String clientId) {
+		this.userInfoEndpointUrl = userInfoEndpointUrl;
 		this.clientId = clientId;
 	}
 	
@@ -71,7 +69,12 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 	private OAuth2Authentication extractAuthentication(Map<String, Object> map) {
 		Object principal = getPrincipal(map);
 		OAuth2Request request = getRequest(map);
-		return null;
+		List<GrantedAuthority> authorities = this.authoritiesExtractor
+				.extractAuthorities(map);
+		UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(
+				principal, "N/A", authorities);
+		token.setDetails(map);
+		return new OAuth2Authentication(request, token);
 	}
 
 	private OAuth2Request getRequest(Map<String, Object> map) {
